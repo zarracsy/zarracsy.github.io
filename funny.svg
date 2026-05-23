@@ -53,10 +53,10 @@
         })();
         </script>
 
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <title>SVG Boot Menu</title>
+        <title>Boot Menu</title>
 
         <style><![CDATA[
 
@@ -71,11 +71,15 @@
           }
 
           body{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
             background:
-              radial-gradient(circle at top right, rgba(0,255,255,.12), transparent 35%),
-              radial-gradient(circle at bottom left, rgba(0,255,255,.08), transparent 40%),
-              linear-gradient(135deg,#020202,#0b1018);
-            color:white;
+              radial-gradient(circle at center, rgba(0,255,255,.06), transparent 50%),
+              linear-gradient(to bottom,#020202,#071018);
+
+            color:#7ffcff;
           }
 
           *{
@@ -86,7 +90,8 @@
             position:fixed;
             inset:0;
             pointer-events:none;
-            opacity:.06;
+            opacity:.05;
+
             background:
               repeating-linear-gradient(
                 to bottom,
@@ -95,128 +100,52 @@
                 transparent 2px,
                 transparent 4px
               );
-            mix-blend-mode:screen;
-          }
-
-          .boot-container{
-            position:relative;
-            width:100%;
-            height:100%;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:90px;
-          }
-
-          .left{
-            width:620px;
-          }
-
-          .title{
-            font-size:58px;
-            font-weight:bold;
-            letter-spacing:4px;
-            margin-bottom:14px;
-            text-shadow:0 0 20px cyan;
-          }
-
-          .subtitle{
-            color:#8d8d8d;
-            margin-bottom:45px;
-            font-size:18px;
           }
 
           .menu{
+            width:600px;
             display:flex;
             flex-direction:column;
             gap:18px;
           }
 
+          .title{
+            text-align:center;
+            font-size:58px;
+            letter-spacing:10px;
+            margin-bottom:35px;
+            text-shadow:0 0 18px cyan;
+          }
+
           .button{
-            padding:24px 28px;
-            border-radius:20px;
-            background:rgba(15,15,15,.88);
-            border:2px solid rgba(0,255,255,.7);
+            padding:26px;
+            text-align:center;
+
+            border:2px solid rgba(0,255,255,.8);
+            border-radius:16px;
+
+            background:rgba(0,0,0,.35);
+
+            font-size:30px;
+            letter-spacing:2px;
+
             cursor:pointer;
-            transition:.22s;
-            font-size:24px;
-            font-weight:bold;
-            backdrop-filter:blur(10px);
-            box-shadow:0 0 25px rgba(0,255,255,.18);
-            user-select:none;
+
+            transition:.18s;
+
+            box-shadow:
+              0 0 14px rgba(0,255,255,.18),
+              inset 0 0 12px rgba(0,255,255,.08);
           }
 
           .button:hover{
-            transform:translateX(14px);
-            box-shadow:0 0 40px cyan;
+            transform:scale(1.02);
+
             border-color:cyan;
-          }
 
-          .button small{
-            display:block;
-            margin-top:7px;
-            color:#8d8d8d;
-            font-size:13px;
-            font-weight:normal;
-          }
-
-          .right-panel{
-            width:420px;
-            border-radius:28px;
-            border:2px solid rgba(0,255,255,.3);
-            background:rgba(10,10,10,.68);
-            backdrop-filter:blur(16px);
-            padding:34px;
-            box-shadow:0 0 60px rgba(0,255,255,.14);
-          }
-
-          .panel-title{
-            font-size:32px;
-            margin-bottom:26px;
-            text-shadow:0 0 15px cyan;
-          }
-
-          .status{
-            display:flex;
-            justify-content:space-between;
-            margin-bottom:18px;
-            font-size:17px;
-          }
-
-          .ok{
-            color:#7fffb2;
-          }
-
-          .footer{
-            position:fixed;
-            left:40px;
-            bottom:20px;
-            color:#666;
-            font-size:12px;
-            letter-spacing:1px;
-          }
-
-          .boot-circle{
-            position:fixed;
-            border-radius:50%;
-            filter:blur(80px);
-            pointer-events:none;
-          }
-
-          .circle1{
-            width:400px;
-            height:400px;
-            background:rgba(0,255,255,.12);
-            top:-120px;
-            right:-80px;
-          }
-
-          .circle2{
-            width:500px;
-            height:500px;
-            background:rgba(0,255,255,.07);
-            left:-150px;
-            bottom:-150px;
+            box-shadow:
+              0 0 24px cyan,
+              inset 0 0 18px rgba(0,255,255,.2);
           }
 
         ]]></style>
@@ -225,86 +154,37 @@
 
       <body>
 
-        <div class="boot-circle circle1"></div>
-        <div class="boot-circle circle2"></div>
-
         <div class="scanlines"></div>
 
-        <div class="boot-container">
+        <div class="menu">
 
-          <div class="left">
-
-            <div class="title">
-              SYSTEM BOOT MENU
-            </div>
-
-            <div class="subtitle">
-              _____________________________________________________________________
-            </div>
-
-            <div class="menu">
-
-              <div class="button"
-                   onclick="launchSite('https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg')">
-
-                ▶ Yuki OS
-
-                <small>
-                  (desktop environment)
-                </small>
-
-              </div>
-
-              <div class="button"
-                   onclick="launchSite('https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/')">
-
-                ▶ Lucide Browser
-
-                <small>
-                  (proxy)
-                </small>
-
-              </div>
-
-              <div class="button"
-                   onclick="launchSite('https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg')">
-
-                ▶ Petezah Browser
-
-                <small>
-                  (proxy 2)
-                </small>
-
-              </div>
-
-              <div class="button"
-                   onclick="launchSite('https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg')">
-
-                ▶ Nikehub
-
-                <small>
-                  (games site)
-                </small>
-
-              </div>
-
-              <div class="button"
-                   onclick="launchSite('https://gcore.jsdelivr.net/gh/Stellite-Games/cdn-build@master/logo.svg#/')">
-
-                ▶ Stellite Games
-
-                <small>
-                  (games)
-                </small>
-
-              </div>
-
-            </div>
-
+          <div class="title">
+            SYSTEM BOOT MENU
           </div>
 
-          <div class="right-panel">
+          <div class="button"
+               onclick="launchSite('https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg')">
+            Yuki OS
+          </div>
 
+          <div class="button"
+               onclick="launchSite('https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/')">
+            Lucide Browser
+          </div>
+
+          <div class="button"
+               onclick="launchSite('https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg')">
+            Petezah Browser
+          </div>
+
+          <div class="button"
+               onclick="launchSite('https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg')">
+            Nikehub
+          </div>
+
+          <div class="button"
+               onclick="launchSite('https://gcore.jsdelivr.net/gh/Stellite-Games/cdn-build@master/logo.svg#/')">
+            Stellite Games
           </div>
 
         </div>
