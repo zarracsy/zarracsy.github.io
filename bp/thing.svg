@@ -1,226 +1,267 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-  <foreignObject width="100%" height="100%">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="1920"
+    height="1080"
+    viewBox="0 0 1920 1080">
 
-    <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <foreignObject width="100%" height="100%">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <head>
+                <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 
-        <script>
-        (function(){
+                <style>
+                    :root {
+                      --bg: #101112;
+                      --accent: #2944d9;
+                      --accent-dim: rgba(41,68,217,0.18);
+                      --accent-glow: rgba(41,68,217,0.45);
+                      --text: #c8cdd6;
+                      --text-dim: #5a6070;
+                      --text-bright: #e8ecf4;
+                      --border: rgba(41,68,217,0.35);
+                      --panel-bg: rgba(14,15,17,0.88);
+                      --mono: 'Share Tech Mono', monospace;
+                      --sans: 'Rajdhani', sans-serif;
+                    }
 
-          const XHTML_NS = "http://www.w3.org/1999/xhtml";
+                    *, *::before, *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                      padding: 0;
+                    }
 
-          const root = document.querySelector("foreignObject").firstElementChild;
-          const head = root.querySelector("head");
-          const body = root.querySelector("body");
+                    html, body {
+                      width: 100%;
+                      height: 100%;
+                      background: var(--bg);
+                      color: var(--text);
+                      font-family: var(--mono);
+                      overflow: hidden;
+                    }
 
-          const originalCreateElement = document.createElement.bind(document);
-          const originalCreateElementNS = document.createElementNS.bind(document);
+                    #bg {
+                      position: fixed;
+                      inset: 0;
+                      z-index: 0;
+                      background: url('https://images5.alphacoders.com/116/thumb-1920-1166049.jpg') center/cover no-repeat;
+                      filter: brightness(0.28) saturate(0.6);
+                    }
 
-          Object.defineProperty(document,"head",{
-            get(){ return head },
-            configurable:true
-          });
+                    #main {
+                      position: relative;
+                      z-index: 2;
+                      width: 100%;
+                      height: 100%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      flex-direction: column;
+                    }
 
-          Object.defineProperty(document,"body",{
-            get(){ return body },
-            configurable:true
-          });
+                    .title {
+                      font-family: var(--sans);
+                      font-size: 5rem;
+                      font-weight: 700;
+                      letter-spacing: 0.3em;
+                      text-transform: uppercase;
+                      color: var(--text-bright);
+                      text-shadow:
+                        0 0 40px rgba(41,68,217,0.5),
+                        0 0 80px rgba(41,68,217,0.2);
+                    }
 
-          Object.defineProperty(document,"documentElement",{
-            get(){ return root },
-            configurable:true
-          });
+                    .sub {
+                      margin-top: 10px;
+                      font-size: 0.8rem;
+                      letter-spacing: 0.35em;
+                      color: var(--text-dim);
+                      text-transform: uppercase;
+                    }
 
-          document.createElement = function(tagName, options){
-            if(typeof tagName === "string"){
-              return originalCreateElementNS(XHTML_NS, tagName, options);
-            }
-            return originalCreateElement(tagName, options);
-          };
+                    .menu {
+                      margin-top: 40px;
+                      display: flex;
+                      flex-direction: column;
+                      gap: 12px;
+                      width: 320px;
+                    }
 
-          document.createElementNS = function(namespaceURI, qualifiedName, options){
-            if(namespaceURI == null || namespaceURI === XHTML_NS){
-              return originalCreateElementNS(XHTML_NS, qualifiedName, options);
-            }
-            return originalCreateElementNS(namespaceURI, qualifiedName, options);
-          };
+                    .menu button {
+                      font-family: var(--mono);
+                      font-size: 0.72rem;
+                      letter-spacing: 0.1em;
+                      text-transform: uppercase;
+                      color: var(--text);
+                      background: rgba(41,68,217,0.04);
+                      border: 1px solid rgba(41,68,217,0.2);
+                      padding: 12px 14px;
+                      cursor: pointer;
+                      transition: 0.2s;
+                    }
 
-          if(!location.hash){
-            history.replaceState(history.state, "", "#/");
-          }
+                    .menu button:hover {
+                      background: var(--accent-dim);
+                      border-color: var(--accent);
+                      color: #fff;
+                      box-shadow: 0 0 10px rgba(41,68,217,0.25);
+                    }
 
-        })();
-        </script>
+                    #clock {
+                      position: fixed;
+                      top: 20px;
+                      right: 24px;
+                      color: var(--text);
+                      font-size: 0.8rem;
+                      letter-spacing: 0.2em;
+                    }
 
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    #battery {
+                      position: fixed;
+                      top: 20px;
+                      left: 24px;
+                      color: var(--text);
+                      font-size: 0.8rem;
+                      letter-spacing: 0.2em;
+                    }
 
-        <title>Boot Menu</title>
+                    #ip {
+                      position: fixed;
+                      bottom: 20px;
+                      right: 24px;
+                      color: var(--text-dim);
+                      font-size: 0.7rem;
+                    }
 
-        <style><![CDATA[
+                    #topline {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 1px;
+                      background: linear-gradient(
+                        90deg,
+                        transparent,
+                        var(--accent),
+                        transparent
+                      );
+                    }
+                </style>
+            </head>
 
-          html,
-          body{
-            margin:0;
-            width:100%;
-            height:100%;
-            overflow:hidden;
-            background:black;
-            font-family:monospace;
-          }
+            <body>
+                <div id="bg"></div>
+                <div id="topline"></div>
 
-          body{
-            display:flex;
-            align-items:center;
-            justify-content:center;
+                <div id="battery">BATTERY: --%</div>
+                <div id="clock">--:--:--</div>
+                <div id="ip">IP: Fetching...</div>
 
-            background:
-              radial-gradient(circle at center, rgba(0,255,255,.06), transparent 50%),
-              linear-gradient(to bottom,#020202,#071018);
+                <div id="main">
+                    <div class="title">Placeholder</div>
+                    <div class="sub">System Interface</div>
 
-            color:#7ffcff;
-          }
+                    <div class="menu">
+                        <button onclick="openPage('https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg')">
+                            Yuki OS
+                        </button>
 
-          *{
-            box-sizing:border-box;
-          }
+                        <button onclick="openPage('https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/')">
+                            Lucide
+                        </button>
 
-          .scanlines{
-            position:fixed;
-            inset:0;
-            pointer-events:none;
-            opacity:.05;
+                        <button onclick="openPage('https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg')">
+                            Petezah
+                        </button>
 
-            background:
-              repeating-linear-gradient(
-                to bottom,
-                white 0px,
-                white 2px,
-                transparent 2px,
-                transparent 4px
-              );
-          }
+                        <button onclick="openPage('https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg')">
+                            Nikehub
+                        </button>
 
-          .menu{
-            width:600px;
-            display:flex;
-            flex-direction:column;
-            gap:18px;
-          }
+                        <button onclick="openPage('https://d1w7oj52hl4x53.cloudfront.net/')">
+                            Fern
+                        </button>
+                    </div>
+                </div>
 
-          .title{
-            text-align:center;
-            font-size:58px;
-            letter-spacing:10px;
-            margin-bottom:35px;
-            text-shadow:0 0 18px cyan;
-          }
+                <script><![CDATA[
+                    function updateClock() {
+                        const now = new Date();
 
-          .button{
-            padding:26px;
-            text-align:center;
+                        const h = String(now.getHours()).padStart(2, '0');
+                        const m = String(now.getMinutes()).padStart(2, '0');
+                        const s = String(now.getSeconds()).padStart(2, '0');
 
-            border:2px solid rgba(0,255,255,.8);
-            border-radius:16px;
+                        document.getElementById('clock').textContent =
+                            `${h}:${m}:${s}`;
+                    }
 
-            background:rgba(0,0,0,.35);
+                    setInterval(updateClock, 1000);
+                    updateClock();
 
-            font-size:30px;
-            letter-spacing:2px;
+                    async function initBattery() {
+                        if (!navigator.getBattery) return;
 
-            cursor:pointer;
+                        const battery = await navigator.getBattery();
 
-            transition:.18s;
+                        function render() {
+                            const pct = Math.round(battery.level * 100);
 
-            box-shadow:
-              0 0 14px rgba(0,255,255,.18),
-              inset 0 0 12px rgba(0,255,255,.08);
-          }
+                            document.getElementById('battery').textContent =
+                                `BATTERY: ${pct}%`;
+                        }
 
-          .button:hover{
-            transform:scale(1.02);
+                        render();
 
-            border-color:cyan;
+                        battery.addEventListener('levelchange', render);
+                    }
 
-            box-shadow:
-              0 0 24px cyan,
-              inset 0 0 18px rgba(0,255,255,.2);
-          }
+                    initBattery();
 
-        ]]></style>
+                    async function fetchIP() {
+                        try {
+                            const r = await fetch(
+                                'https://api.ipify.org?format=json'
+                            );
 
-      </head>
+                            const d = await r.json();
 
-      <body>
+                            document.getElementById('ip').textContent =
+                                'IP: ' + d.ip;
+                        } catch (e) {
+                            document.getElementById('ip').textContent =
+                                'IP: Unavailable';
+                        }
+                    }
 
-        <div class="scanlines"></div>
+                    fetchIP();
 
-        <div class="menu">
+                    function openPage(url) {
+                        const win = window.open('about:blank', '_blank');
 
-          <div class="title">
-            SYSTEM BOOT MENU
-          </div>
+                        if (!win) return;
 
-          <div class="button"
-               onclick="launchSite('https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg')">
-            Yuki OS
-          </div>
+                        const iframe = win.document.createElement('iframe');
 
-          <div class="button"
-               onclick="launchSite('https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/')">
-            Lucide Browser
-          </div>
+                        iframe.src = url;
 
-          <div class="button"
-               onclick="launchSite('https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg')">
-            Petezah Browser
-          </div>
+                        iframe.style.cssText = `
+                            position:fixed;
+                            inset:0;
+                            width:100vw;
+                            height:100vh;
+                            border:none;
+                        `;
 
-          <div class="button"
-               onclick="launchSite('https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg')">
-            Nikehub
-          </div>
-
-          <div class="button"
-               onclick="launchSite('https://gcore.jsdelivr.net/gh/Stellite-Games/cdn-build@master/logo.svg#/')">
-            Stellite Games
-          </div>
-
-        </div>
-
-        <script>
-
-        function launchSite(url){
-
-          const win = window.open("about:blank", "_blank");
-
-          if(!win){
-            alert("Popup blocked.");
-            return;
-          }
-
-          const iframe = win.document.createElement("iframe");
-
-          iframe.src = url;
-
-          iframe.style.position = "fixed";
-          iframe.style.inset = "0";
-          iframe.style.width = "100vw";
-          iframe.style.height = "100vh";
-          iframe.style.border = "none";
-
-          win.document.body.style.margin = "0";
-
-          win.document.body.appendChild(iframe);
-
-        }
-
-        </script>
-
-      </body>
-
-    </html>
-
-  </foreignObject>
+                        win.document.body.style.margin = '0';
+                        win.document.body.appendChild(iframe);
+                    }
+                ]]></script>
+            </body>
+        </html>
+    </foreignObject>
 </svg>
