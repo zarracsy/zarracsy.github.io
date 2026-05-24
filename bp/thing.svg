@@ -1,267 +1,634 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    width="1920"
-    height="1080"
-    viewBox="0 0 1920 1080">
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+  <foreignObject width="100%" height="100%">
 
-    <foreignObject width="100%" height="100%">
-        <html xmlns="http://www.w3.org/1999/xhtml">
-            <head>
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+      <head>
 
-                <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+        <!-- foreignObject compatibility patch -->
+        <script>
+        (function () {
+          const XHTML_NS = "http://www.w3.org/1999/xhtml";
 
-                <style>
-                    :root {
-                      --bg: #101112;
-                      --accent: #2944d9;
-                      --accent-dim: rgba(41,68,217,0.18);
-                      --accent-glow: rgba(41,68,217,0.45);
-                      --text: #c8cdd6;
-                      --text-dim: #5a6070;
-                      --text-bright: #e8ecf4;
-                      --border: rgba(41,68,217,0.35);
-                      --panel-bg: rgba(14,15,17,0.88);
-                      --mono: 'Share Tech Mono', monospace;
-                      --sans: 'Rajdhani', sans-serif;
-                    }
+          const root =
+            document.querySelector("foreignObject").firstElementChild;
 
-                    *, *::before, *::after {
-                      box-sizing: border-box;
-                      margin: 0;
-                      padding: 0;
-                    }
+          const head = root.querySelector("head");
+          const body = root.querySelector("body");
 
-                    html, body {
-                      width: 100%;
-                      height: 100%;
-                      background: var(--bg);
-                      color: var(--text);
-                      font-family: var(--mono);
-                      overflow: hidden;
-                    }
+          const originalCreateElement =
+            document.createElement.bind(document);
 
-                    #bg {
-                      position: fixed;
-                      inset: 0;
-                      z-index: 0;
-                      background: url('https://images5.alphacoders.com/116/thumb-1920-1166049.jpg') center/cover no-repeat;
-                      filter: brightness(0.28) saturate(0.6);
-                    }
+          const originalCreateElementNS =
+            document.createElementNS.bind(document);
 
-                    #main {
-                      position: relative;
-                      z-index: 2;
-                      width: 100%;
-                      height: 100%;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      flex-direction: column;
-                    }
+          Object.defineProperty(document, "head", {
+            get() { return head; },
+            configurable: true
+          });
 
-                    .title {
-                      font-family: var(--sans);
-                      font-size: 5rem;
-                      font-weight: 700;
-                      letter-spacing: 0.3em;
-                      text-transform: uppercase;
-                      color: var(--text-bright);
-                      text-shadow:
-                        0 0 40px rgba(41,68,217,0.5),
-                        0 0 80px rgba(41,68,217,0.2);
-                    }
+          Object.defineProperty(document, "body", {
+            get() { return body; },
+            configurable: true
+          });
 
-                    .sub {
-                      margin-top: 10px;
-                      font-size: 0.8rem;
-                      letter-spacing: 0.35em;
-                      color: var(--text-dim);
-                      text-transform: uppercase;
-                    }
+          Object.defineProperty(document, "documentElement", {
+            get() { return root; },
+            configurable: true
+          });
 
-                    .menu {
-                      margin-top: 40px;
-                      display: flex;
-                      flex-direction: column;
-                      gap: 12px;
-                      width: 320px;
-                    }
+          document.createElement = function(tagName, options) {
+            if (typeof tagName === "string") {
+              return originalCreateElementNS(
+                XHTML_NS,
+                tagName,
+                options
+              );
+            }
 
-                    .menu button {
-                      font-family: var(--mono);
-                      font-size: 0.72rem;
-                      letter-spacing: 0.1em;
-                      text-transform: uppercase;
-                      color: var(--text);
-                      background: rgba(41,68,217,0.04);
-                      border: 1px solid rgba(41,68,217,0.2);
-                      padding: 12px 14px;
-                      cursor: pointer;
-                      transition: 0.2s;
-                    }
+            return originalCreateElement(tagName, options);
+          };
 
-                    .menu button:hover {
-                      background: var(--accent-dim);
-                      border-color: var(--accent);
-                      color: #fff;
-                      box-shadow: 0 0 10px rgba(41,68,217,0.25);
-                    }
+          document.createElementNS = function(
+            namespaceURI,
+            qualifiedName,
+            options
+          ) {
+            if (
+              namespaceURI == null ||
+              namespaceURI === XHTML_NS
+            ) {
+              return originalCreateElementNS(
+                XHTML_NS,
+                qualifiedName,
+                options
+              );
+            }
 
-                    #clock {
-                      position: fixed;
-                      top: 20px;
-                      right: 24px;
-                      color: var(--text);
-                      font-size: 0.8rem;
-                      letter-spacing: 0.2em;
-                    }
+            return originalCreateElementNS(
+              namespaceURI,
+              qualifiedName,
+              options
+            );
+          };
 
-                    #battery {
-                      position: fixed;
-                      top: 20px;
-                      left: 24px;
-                      color: var(--text);
-                      font-size: 0.8rem;
-                      letter-spacing: 0.2em;
-                    }
+          if (!location.hash) {
+            history.replaceState(history.state, "", "#/");
+          }
+        })();
+        </script>
 
-                    #ip {
-                      position: fixed;
-                      bottom: 20px;
-                      right: 24px;
-                      color: var(--text-dim);
-                      font-size: 0.7rem;
-                    }
+        <!-- base -->
+        <style><![CDATA[
+          html,
+          body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+          }
 
-                    #topline {
-                      position: fixed;
-                      top: 0;
-                      left: 0;
-                      width: 100%;
-                      height: 1px;
-                      background: linear-gradient(
-                        90deg,
-                        transparent,
-                        var(--accent),
-                        transparent
-                      );
-                    }
-                </style>
-            </head>
+          body {
+            background: transparent;
+          }
 
-            <body>
-                <div id="bg"></div>
-                <div id="topline"></div>
+          foreignObject {
+            overflow: visible;
+          }
+        ]]></style>
 
-                <div id="battery">BATTERY: --%</div>
-                <div id="clock">--:--:--</div>
-                <div id="ip">IP: Fetching...</div>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-                <div id="main">
-                    <div class="title">Placeholder</div>
-                    <div class="sub">System Interface</div>
+        <title>HOMEBASE</title>
 
-                    <div class="menu">
-                        <button onclick="openPage('https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg')">
-                            Yuki OS
-                        </button>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
 
-                        <button onclick="openPage('https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/')">
-                            Lucide
-                        </button>
+        <style><![CDATA[
+          :root {
+            --bg: #101112;
+            --accent: #2944d9;
+            --accent-dim: rgba(41,68,217,0.18);
+            --accent-glow: rgba(41,68,217,0.45);
+            --text: #c8cdd6;
+            --text-dim: #5a6070;
+            --text-bright: #e8ecf4;
+            --border: rgba(41,68,217,0.35);
+            --panel-bg: rgba(14,15,17,0.88);
+            --mono: 'Share Tech Mono', monospace;
+            --sans: 'Rajdhani', sans-serif;
+          }
 
-                        <button onclick="openPage('https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg')">
-                            Petezah
-                        </button>
+          *,
+          *::before,
+          *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+          }
 
-                        <button onclick="openPage('https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg')">
-                            Nikehub
-                        </button>
+          html,
+          body {
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            overflow: hidden;
+            user-select: none;
+          }
 
-                        <button onclick="openPage('https://d1w7oj52hl4x53.cloudfront.net/')">
-                            Fern
-                        </button>
-                    </div>
-                </div>
+          #bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
 
-                <script><![CDATA[
-                    function updateClock() {
-                        const now = new Date();
+            background:
+              url('https://images5.alphacoders.com/116/thumb-1920-1166049.jpg')
+              center/cover no-repeat;
 
-                        const h = String(now.getHours()).padStart(2, '0');
-                        const m = String(now.getMinutes()).padStart(2, '0');
-                        const s = String(now.getSeconds()).padStart(2, '0');
+            filter: brightness(0.28) saturate(0.6);
+          }
 
-                        document.getElementById('clock').textContent =
-                            `${h}:${m}:${s}`;
-                    }
+          #topline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
 
-                    setInterval(updateClock, 1000);
-                    updateClock();
+            height: 1px;
 
-                    async function initBattery() {
-                        if (!navigator.getBattery) return;
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                var(--accent),
+                transparent
+              );
 
-                        const battery = await navigator.getBattery();
+            z-index: 10;
+            opacity: 0.5;
+          }
 
-                        function render() {
-                            const pct = Math.round(battery.level * 100);
+          #loader {
+            position: fixed;
+            inset: 0;
 
-                            document.getElementById('battery').textContent =
-                                `BATTERY: ${pct}%`;
-                        }
+            z-index: 100;
 
-                        render();
+            background: var(--bg);
 
-                        battery.addEventListener('levelchange', render);
-                    }
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-                    initBattery();
+            gap: 18px;
 
-                    async function fetchIP() {
-                        try {
-                            const r = await fetch(
-                                'https://api.ipify.org?format=json'
-                            );
+            transition:
+              opacity 0.6s ease,
+              visibility 0.6s ease;
+          }
 
-                            const d = await r.json();
+          #loader.hide {
+            opacity: 0;
+            visibility: hidden;
+          }
 
-                            document.getElementById('ip').textContent =
-                                'IP: ' + d.ip;
-                        } catch (e) {
-                            document.getElementById('ip').textContent =
-                                'IP: Unavailable';
-                        }
-                    }
+          .loader-title {
+            font-family: var(--sans);
+            font-size: 2.8rem;
+            font-weight: 700;
 
-                    fetchIP();
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
 
-                    function openPage(url) {
-                        const win = window.open('about:blank', '_blank');
+            color: var(--accent);
 
-                        if (!win) return;
+            animation: flicker 1.4s steps(1) infinite;
+          }
 
-                        const iframe = win.document.createElement('iframe');
+          .loader-bar-wrap {
+            width: 260px;
+            height: 2px;
 
-                        iframe.src = url;
+            background: rgba(41,68,217,0.15);
 
-                        iframe.style.cssText = `
-                            position:fixed;
-                            inset:0;
-                            width:100vw;
-                            height:100vh;
-                            border:none;
-                        `;
+            overflow: hidden;
+          }
 
-                        win.document.body.style.margin = '0';
-                        win.document.body.appendChild(iframe);
-                    }
-                ]]></script>
-            </body>
-        </html>
-    </foreignObject>
+          .loader-bar {
+            height: 100%;
+            width: 0%;
+
+            background: var(--accent);
+
+            animation:
+              loadprogress 1.8s
+              cubic-bezier(.4,0,.2,1)
+              forwards;
+          }
+
+          .loader-status {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 0.12em;
+
+            animation: blink 0.9s step-end infinite;
+          }
+
+          @keyframes loadprogress {
+            0%   { width: 0%; }
+            30%  { width: 28%; }
+            55%  { width: 61%; }
+            80%  { width: 79%; }
+            100% { width: 100%; }
+          }
+
+          @keyframes blink {
+            50% { opacity: 0; }
+          }
+
+          @keyframes flicker {
+            0%,94%,96%,100% { opacity: 1; }
+            95% { opacity: 0.3; }
+          }
+
+          #app {
+            position: fixed;
+            inset: 0;
+
+            z-index: 1;
+
+            opacity: 0;
+
+            transition: opacity 0.7s ease;
+          }
+
+          #app.visible {
+            opacity: 1;
+          }
+
+          .hud {
+            position: fixed;
+            z-index: 10;
+
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+          }
+
+          .hud-label {
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: rgba(41,68,217,0.55);
+
+            display: block;
+            margin-bottom: 2px;
+          }
+
+          .hud-val {
+            color: var(--text);
+          }
+
+          #hud-tl {
+            top: 20px;
+            left: 22px;
+          }
+
+          #hud-tr {
+            top: 20px;
+            right: 22px;
+            text-align: right;
+          }
+
+          #hud-bl {
+            bottom: 20px;
+            left: 22px;
+          }
+
+          #hud-br {
+            bottom: 20px;
+            right: 22px;
+            text-align: right;
+          }
+
+          #main-title {
+            position: fixed;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            text-align: center;
+          }
+
+          .title-text {
+            font-family: var(--sans);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+
+            color: var(--text-bright);
+
+            text-shadow:
+              0 0 40px rgba(41,68,217,0.5),
+              0 0 80px rgba(41,68,217,0.2);
+          }
+
+          .menu {
+            margin-top: 30px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            width: 320px;
+          }
+
+          .menu-btn {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+
+            color: var(--text);
+
+            background: rgba(41,68,217,0.04);
+
+            border: 1px solid rgba(41,68,217,0.2);
+
+            padding: 12px 14px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+          }
+
+          .menu-btn:hover {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+
+            color: #fff;
+
+            box-shadow:
+              0 0 10px rgba(41,68,217,0.25);
+          }
+        ]]></style>
+
+      </head>
+
+      <body>
+
+        <div id="bg"></div>
+        <div id="topline"></div>
+
+        <!-- loader -->
+        <div id="loader">
+          <div class="loader-title">HOMEBASE/div>
+
+          <div class="loader-bar-wrap">
+            <div class="loader-bar"></div>
+          </div>
+
+          <div class="loader-status" id="loader-status">
+            Initializing...
+          </div>
+        </div>
+
+        <!-- app -->
+        <div id="app">
+
+          <!-- top left -->
+          <div class="hud" id="hud-tl">
+            <span class="hud-label">Battery</span>
+            <span class="hud-val" id="battery-text">--%</span>
+          </div>
+
+          <!-- top right -->
+          <div class="hud" id="hud-tr">
+            <span class="hud-label">Local Time</span>
+            <span class="hud-val" id="clock">--:--:--</span>
+          </div>
+
+          <!-- bottom right -->
+          <div class="hud" id="hud-br">
+            <span class="hud-label">External IP</span>
+            <span class="hud-val" id="ip-display">Fetching...</span>
+          </div>
+
+          <!-- title -->
+          <div id="main-title">
+
+            <div class="title-text">
+              HOMEBASE
+            </div>
+
+            <div class="menu" id="menu-buttons"></div>
+
+          </div>
+
+        </div>
+
+        <script><![CDATA[
+
+          const menuItems = [
+            {
+              label: 'Yuki OS',
+              url:
+                'https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg'
+            },
+
+            {
+              label: 'Lucide',
+              url:
+                'https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/'
+            },
+
+            {
+              label: 'Petezah',
+              url:
+                'https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg'
+            },
+
+            {
+              label: 'Nikehub',
+              url:
+                'https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg'
+            },
+
+            {
+              label: 'Fern',
+              url:
+                'https://d1w7oj52hl4x53.cloudfront.net/'
+            }
+          ];
+
+          // build buttons
+          const menuBody =
+            document.getElementById('menu-buttons');
+
+          menuItems.forEach(item => {
+
+            const btn =
+              document.createElement('button');
+
+            btn.className = 'menu-btn';
+
+            btn.textContent = item.label;
+
+            btn.onclick = () => {
+
+              const win =
+                window.open('about:blank', '_blank');
+
+              if (!win) return;
+
+              const iframe =
+                win.document.createElement('iframe');
+
+              iframe.src = item.url;
+
+              iframe.style.cssText = `
+                position:fixed;
+                inset:0;
+                width:100vw;
+                height:100vh;
+                border:none;
+              `;
+
+              win.document.body.style.margin = '0';
+
+              win.document.body.appendChild(iframe);
+            };
+
+            menuBody.appendChild(btn);
+          });
+
+          // loader
+          const statuses = [
+            'Initializing...',
+            'Loading modules...',
+            'Verifying integrity...',
+            'Mounting resources...',
+            'Ready.'
+          ];
+
+          let si = 0;
+
+          const statusEl =
+            document.getElementById('loader-status');
+
+          const statusInterval = setInterval(() => {
+
+            si++;
+
+            if (si < statuses.length) {
+              statusEl.textContent = statuses[si];
+            } else {
+              clearInterval(statusInterval);
+            }
+
+          }, 360);
+
+          setTimeout(() => {
+
+            document
+              .getElementById('loader')
+              .classList.add('hide');
+
+            document
+              .getElementById('app')
+              .classList.add('visible');
+
+          }, 2000);
+
+          // clock
+          function updateClock() {
+
+            const now = new Date();
+
+            const h =
+              String(now.getHours()).padStart(2, '0');
+
+            const m =
+              String(now.getMinutes()).padStart(2, '0');
+
+            const s =
+              String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('clock')
+              .textContent = `${h}:${m}:${s}`;
+          }
+
+          setInterval(updateClock, 1000);
+
+          updateClock();
+
+          // battery
+          async function initBattery() {
+
+            if (!navigator.getBattery) return;
+
+            const bat =
+              await navigator.getBattery();
+
+            function render() {
+
+              const pct =
+                Math.round(bat.level * 100);
+
+              document
+                .getElementById('battery-text')
+                .textContent = pct + '%';
+            }
+
+            render();
+
+            bat.addEventListener(
+              'levelchange',
+              render
+            );
+          }
+
+          initBattery();
+
+          // ip
+          async function fetchIP() {
+
+            try {
+
+              const r = await fetch(
+                'https://api.ipify.org?format=json'
+              );
+
+              const d = await r.json();
+
+              document
+                .getElementById('ip-display')
+                .textContent = d.ip;
+
+            } catch {
+
+              document
+                .getElementById('ip-display')
+                .textContent = 'Unavailable';
+            }
+          }
+
+          fetchIP();
+
+        ]]></script>
+
+      </body>
+    </html>
+
+  </foreignObject>
 </svg>
