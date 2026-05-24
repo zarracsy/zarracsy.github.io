@@ -5,13 +5,23 @@
 
       <head>
 
-        <!-- SVG/XHTML DOM PATCH -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HOMEBASE</title>
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        
         <script>
-        (function () {
+        (function(){
+
           const XHTML_NS = "http://www.w3.org/1999/xhtml";
 
           const root =
-            document.querySelector("foreignObject").firstElementChild;
+            document.querySelector("foreignObject")
+              .firstElementChild;
 
           const head = root.querySelector("head");
           const body = root.querySelector("body");
@@ -22,29 +32,32 @@
           const originalCreateElementNS =
             document.createElementNS.bind(document);
 
-          Object.defineProperty(document, "head", {
-            get() { return head; },
-            configurable: true
+          Object.defineProperty(document,"head",{
+            get(){ return head },
+            configurable:true
           });
 
-          Object.defineProperty(document, "body", {
-            get() { return body; },
-            configurable: true
+          Object.defineProperty(document,"body",{
+            get(){ return body },
+            configurable:true
           });
 
-          Object.defineProperty(document, "documentElement", {
-            get() { return root; },
-            configurable: true
+          Object.defineProperty(document,"documentElement",{
+            get(){ return root },
+            configurable:true
           });
 
-          document.createElement = function(tagName, options) {
-            if (typeof tagName === "string") {
+          document.createElement = function(tagName, options){
+
+            if(typeof tagName === "string"){
+
               return originalCreateElementNS(
                 XHTML_NS,
                 tagName,
                 options
               );
             }
+
             return originalCreateElement(tagName, options);
           };
 
@@ -52,11 +65,13 @@
             namespaceURI,
             qualifiedName,
             options
-          ) {
-            if (
+          ){
+
+            if(
               namespaceURI == null ||
               namespaceURI === XHTML_NS
-            ) {
+            ){
+
               return originalCreateElementNS(
                 XHTML_NS,
                 qualifiedName,
@@ -71,118 +86,316 @@
             );
           };
 
-          if (!location.hash) {
+          if(!location.hash){
             history.replaceState(history.state, "", "#/");
           }
+
         })();
         </script>
 
-        <!-- HOMEBASE STYLES -->
         <style><![CDATA[
 
-          :root{
-            --bg:#101112;
-            --accent:#2944d9;
-            --text:#c8cdd6;
-            --text-dim:#5a6070;
-            --text-bright:#e8ecf4;
-            --border:rgba(41,68,217,.35);
-            --panel-bg:rgba(14,15,17,.88);
+          :root {
+            --bg: #101112;
+            --accent: #2944d9;
+            --accent-dim: rgba(41,68,217,0.18);
+            --accent-glow: rgba(41,68,217,0.45);
+            --text: #c8cdd6;
+            --text-dim: #5a6070;
+            --text-bright: #e8ecf4;
+            --border: rgba(41,68,217,0.35);
+            --panel-bg: rgba(14,15,17,0.88);
+            --mono: 'Share Tech Mono', monospace;
+            --sans: 'Rajdhani', sans-serif;
           }
 
-          html,
-          body{
-            margin:0;
-            width:100%;
-            height:100%;
-            overflow:hidden;
-            background:#101112;
-            font-family:monospace;
+          *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
           }
 
-          #app{
-            position:relative;
-            width:100vw;
-            height:100vh;
-            overflow:hidden;
-            background:#101112;
-            color:var(--text);
+          html, body {
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--mono);
+            overflow: hidden;
+            user-select: none;
           }
 
-          #bg{
-            position:absolute;
-            inset:0;
-            background:url(
-              https://images5.alphacoders.com/116/thumb-1920-1166049.jpg
-            ) center/cover no-repeat;
-
-            filter:brightness(.28) saturate(.6);
+          body {
+            background: transparent;
           }
 
-          #main-title{
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform:translate(-50%,-50%);
-            z-index:5;
-            text-align:center;
+          #bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: url('https://images5.alphacoders.com/116/thumb-1920-1166049.jpg') center/cover no-repeat;
+            filter: brightness(0.28) saturate(0.6);
           }
 
-          .title{
-            font-size:5rem;
-            letter-spacing:.3em;
-            color:white;
-            text-shadow:
-              0 0 40px rgba(41,68,217,.5),
-              0 0 80px rgba(41,68,217,.2);
+          #topline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            z-index: 9;
+            opacity: 0.5;
           }
 
-          #panel-group{
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform:translate(-50%,-50%);
-            display:flex;
-            gap:14px;
-            z-index:20;
+          #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
           }
 
-          .panel{
-            width:260px;
-            min-height:300px;
-
-            background:rgba(14,15,17,.88);
-
-            border:1px solid rgba(41,68,217,.35);
-
-            backdrop-filter:blur(12px);
-
-            padding:14px;
+          #loader.hide {
+            opacity: 0;
+            visibility: hidden;
           }
 
-          .panel-title{
-            color:#2944d9;
-            text-transform:uppercase;
-            letter-spacing:.2em;
-            margin-bottom:16px;
+          .loader-title {
+            font-family: var(--sans);
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            color: var(--accent);
+            text-transform: uppercase;
+            animation: flicker 1.4s steps(1) infinite;
           }
 
-          .menu-btn{
-            width:100%;
-            padding:10px 14px;
-            margin-bottom:8px;
-
-            background:rgba(41,68,217,.05);
-
-            border:1px solid rgba(41,68,217,.2);
-
-            color:#c8cdd6;
-
-            cursor:pointer;
+          .loader-bar-wrap {
+            width: 260px;
+            height: 2px;
+            background: rgba(41,68,217,0.15);
+            overflow: hidden;
           }
 
-          .menu-btn:hover{
-            background:rgba(41,68,217,.18);
+          .loader-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            animation: loadprogress 1.8s cubic-bezier(.4,0,.2,1) forwards;
+          }
+
+          .loader-status {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 0.12em;
+            animation: blink 0.9s step-end infinite;
+          }
+
+          @keyframes loadprogress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+          }
+
+          @keyframes blink {
+            50% { opacity: 0; }
+          }
+
+          @keyframes flicker {
+            0%,94%,96%,100% { opacity: 1; }
+            95% { opacity: 0.3; }
+          }
+
+          #app {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+          }
+
+          #app.visible {
+            opacity: 1;
+          }
+
+          .hud {
+            position: fixed;
+            z-index: 10;
+            font-size: 0.68rem;
+            letter-spacing: 0.1em;
+            color: var(--text-dim);
+          }
+
+          .hud-label {
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: rgba(41,68,217,0.55);
+            display: block;
+            margin-bottom: 2px;
+          }
+
+          .hud-val {
+            color: var(--text);
+          }
+
+          #hud-tl {
+            top: 20px;
+            left: 22px;
+          }
+
+          #hud-tr {
+            top: 20px;
+            right: 22px;
+            text-align: right;
+          }
+
+          #hud-bl {
+            bottom: 20px;
+            left: 22px;
+          }
+
+          #hud-br {
+            bottom: 20px;
+            right: 22px;
+            text-align: right;
+          }
+
+          .battery-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 3px;
+          }
+
+          .battery-icon {
+            width: 28px;
+            height: 13px;
+            border: 1.5px solid var(--text-dim);
+            border-radius: 2px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 1.5px;
+          }
+
+          .battery-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 1px;
+            width: 70%;
+          }
+
+          #open-menu-btn {
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(41,68,217,0.06);
+            border: 1px solid var(--border);
+            padding: 7px 16px;
+            cursor: pointer;
+          }
+
+          #main-title {
+            position: fixed;
+            z-index: 5;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+          }
+
+          .title-text {
+            font-family: var(--sans);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-bright);
+            text-shadow: 0 0 40px rgba(41,68,217,0.5);
+          }
+
+          #overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(6,7,8,0.65);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+          }
+
+          #overlay.show {
+            opacity: 1;
+            visibility: visible;
+          }
+
+          #panel-group {
+            position: fixed;
+            z-index: 60;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.93);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .32s ease, transform .32s ease;
+          }
+
+          #panel-group.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+          }
+
+          .panel {
+            background: rgba(14,15,17,0.88);
+            border: 1px solid rgba(41,68,217,0.35);
+            backdrop-filter: blur(12px);
+          }
+
+          .side-panel {
+            width: 200px;
+            min-height: 320px;
+          }
+
+          #main-panel {
+            width: 340px;
+          }
+
+          .panel-header {
+            font-size: 0.58rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            padding: 10px 14px 8px;
+            border-bottom: 1px solid rgba(41,68,217,0.2);
+          }
+
+          .side-panel-body,
+          .main-panel-body {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+          }
+
+          .menu-btn {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(41,68,217,0.04);
+            border: 1px solid rgba(41,68,217,0.2);
+            color: var(--text);
+            cursor: pointer;
           }
 
         ]]></style>
@@ -191,77 +404,251 @@
 
       <body>
 
+        <div id="bg"></div>
+        <div id="topline"></div>
+
+        <div id="loader">
+          <div class="loader-title">H O M E B A S E</div>
+          <div class="loader-bar-wrap">
+            <div class="loader-bar"></div>
+          </div>
+          <div class="loader-status" id="loader-status">
+            Initializing...
+          </div>
+        </div>
+
         <div id="app">
 
-          <div id="bg"></div>
-
-          <div id="main-title">
-            <div class="title">
-              HOMEBASE
+          <div class="hud" id="hud-tl">
+            <span class="hud-label">Battery</span>
+            <div class="battery-wrap">
+              <div class="battery-icon">
+                <div class="battery-fill" id="battery-fill"></div>
+              </div>
+              <span class="hud-val" id="battery-text">--</span>
             </div>
           </div>
 
+          <div class="hud" id="hud-tr">
+            <span class="hud-label">Local Time</span>
+            <span class="hud-val" id="clock">--:--:--</span>
+          </div>
+
+          <div class="hud" id="hud-bl">
+            <button id="open-menu-btn">[ Open Menu ]</button>
+          </div>
+
+          <div class="hud" id="hud-br">
+            <span class="hud-label">External IP</span>
+            <span class="hud-val" id="ip-display">Fetching...</span>
+          </div>
+
+          <div id="main-title">
+            <div class="title-text">HOMEBASE</div>
+          </div>
+
+          <div id="overlay"></div>
+
           <div id="panel-group">
 
-            <div class="panel">
-              <div class="panel-title">
-                Network
+            <div class="panel side-panel">
+              <div class="panel-header">Network Status</div>
+              <div class="side-panel-body">
+                <div id="net-status">Online</div>
+                <div id="net-type">4G</div>
+                <div id="net-downlink">120 Mbps</div>
               </div>
-
-              <div>Status: Online</div>
-              <div>RTT: 14ms</div>
-              <div>Downlink: 120Mbps</div>
             </div>
 
-            <div class="panel">
-              <div class="panel-title">
-                Menu
-              </div>
-
-              <button class="menu-btn">
-                Yuki OS
-              </button>
-
-              <button class="menu-btn">
-                Lucide
-              </button>
-
-              <button class="menu-btn">
-                Petezah
-              </button>
-
+            <div class="panel" id="main-panel">
+              <div class="panel-header">Menu</div>
+              <div class="main-panel-body" id="menu-buttons"></div>
             </div>
 
-            <div class="panel">
-              <div class="panel-title">
-                System
+            <div class="panel side-panel">
+              <div class="panel-header">Browser Storage</div>
+              <div class="side-panel-body">
+                <div id="st-cookies">Enabled</div>
+                <div id="st-ls">0</div>
+                <div id="st-history">0</div>
               </div>
-
-              <div>Battery: 72%</div>
-              <div>Storage: 14 Items</div>
-              <div>Language: en-US</div>
             </div>
 
           </div>
 
         </div>
 
-        <!-- HOMEBASE SCRIPT -->
-        <script>
+        <script><![CDATA[
 
-          console.log("HOMEBASE booted inside SVG");
+          const menuItems = [
+            {
+              label:'Yuki OS',
+              url:'https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg'
+            },
+            {
+              label:'Lucide',
+              url:'https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/'
+            },
+            {
+              label:'Petezah',
+              url:'https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg'
+            },
+            {
+              label:'Nikehub',
+              url:'https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg'
+            },
+            {
+              label:'Fern',
+              url:'https://d1w7oj52hl4x53.cloudfront.net/'
+            }
+          ];
 
-          document
-            .querySelectorAll(".menu-btn")
-            .forEach(btn => {
+          const menuBody =
+            document.getElementById('menu-buttons');
 
-              btn.onclick = () => {
-                console.log(btn.textContent);
-              };
+          menuItems.forEach(item => {
+
+            const btn = document.createElement('button');
+
+            btn.className = 'menu-btn';
+            btn.textContent = item.label;
+
+            btn.addEventListener('click', () => {
+
+              const win = window.open(
+                'about:blank',
+                '_blank'
+              );
+
+              if(!win){
+                alert('Popup blocked.');
+                return;
+              }
+
+              const iframe =
+                win.document.createElement('iframe');
+
+              iframe.src = item.url;
+
+              iframe.style.cssText =
+                'position:fixed;inset:0;width:100vw;height:100vh;border:none;';
+
+              win.document.body.style.margin = '0';
+              win.document.body.appendChild(iframe);
 
             });
 
-        </script>
+            menuBody.appendChild(btn);
+          });
+
+          function updateClock(){
+
+            const now = new Date();
+
+            const h = String(now.getHours())
+              .padStart(2,'0');
+
+            const m = String(now.getMinutes())
+              .padStart(2,'0');
+
+            const s = String(now.getSeconds())
+              .padStart(2,'0');
+
+            document.getElementById('clock')
+              .textContent = `${h}:${m}:${s}`;
+          }
+
+          setInterval(updateClock, 1000);
+          updateClock();
+
+          async function initBattery(){
+
+            if(!navigator.getBattery){
+              return;
+            }
+
+            const bat = await navigator.getBattery();
+
+            function render(){
+
+              const pct =
+                Math.round(bat.level * 100);
+
+              document.getElementById(
+                'battery-text'
+              ).textContent = pct + '%';
+
+              document.getElementById(
+                'battery-fill'
+              ).style.width = pct + '%';
+            }
+
+            render();
+
+            bat.addEventListener(
+              'levelchange',
+              render
+            );
+          }
+
+          async function fetchIP(){
+
+            try {
+
+              const r = await fetch(
+                'https://api.ipify.org?format=json'
+              );
+
+              const d = await r.json();
+
+              document.getElementById(
+                'ip-display'
+              ).textContent = d.ip;
+
+            } catch {
+
+              document.getElementById(
+                'ip-display'
+              ).textContent = 'Unavailable';
+            }
+          }
+
+          const overlay =
+            document.getElementById('overlay');
+
+          const panelGroup =
+            document.getElementById('panel-group');
+
+          document
+            .getElementById('open-menu-btn')
+            .addEventListener('click', () => {
+
+              overlay.classList.add('show');
+              panelGroup.classList.add('show');
+            });
+
+          overlay.addEventListener('click', () => {
+
+            overlay.classList.remove('show');
+            panelGroup.classList.remove('show');
+          });
+
+          setTimeout(() => {
+
+            document
+              .getElementById('loader')
+              .classList.add('hide');
+
+            document
+              .getElementById('app')
+              .classList.add('visible');
+
+            initBattery();
+            fetchIP();
+
+          }, 2000);
+
+        ]]></script>
 
       </body>
 
