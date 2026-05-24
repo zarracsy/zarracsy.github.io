@@ -140,7 +140,7 @@ body{
   z-index:0;
 
   background:url(
-    '/images/supercool.png'
+    '/images/supercool.jpg'
   ) center/cover no-repeat;
 
   filter:brightness(.28) saturate(.6);
