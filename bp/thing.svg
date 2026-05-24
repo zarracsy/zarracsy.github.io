@@ -628,6 +628,16 @@ const menuItems = [
   {
     label:"Petezah",
     url:"https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg"
+  },
+
+  {
+    label:"Nikehub",
+    url:"https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg"
+  },
+
+  {
+    label:"Fern",
+    url:"https://d1w7oj52hl4x53.cloudfront.net/"
   }
 
 ];
