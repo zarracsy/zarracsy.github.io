@@ -4,7 +4,6 @@
     <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
       <head>
 
-        <!-- foreignObject compatibility patch -->
         <script>
         (function () {
           const XHTML_NS = "http://www.w3.org/1999/xhtml";
@@ -101,10 +100,10 @@
 
         <title>HOMEBASE</title>
 
-        <link
-          href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
+<link
+  href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap"
+  rel="stylesheet"
+/>
 
         <style><![CDATA[
           :root {
