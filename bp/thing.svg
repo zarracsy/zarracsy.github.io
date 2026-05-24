@@ -391,7 +391,7 @@
 
         <!-- loader -->
         <div id="loader">
-          <div class="loader-title">HOMEBASE/div>
+          <div class="loader-title">HOMEBASE</div>
 
           <div class="loader-bar-wrap">
             <div class="loader-bar"></div>
