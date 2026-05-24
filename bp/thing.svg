@@ -572,6 +572,26 @@ body{
 
           <div id="panel-group">
 
+            <div class="panel side-panel">
+
+              <div class="panel-header">
+                Network
+              </div>
+
+              <div class="side-panel-body">
+
+                <div id="net-status">
+                  Online
+                </div>
+
+                <div id="net-type">
+                  4G
+                </div>
+
+              </div>
+
+            </div>
+
             <div class="panel" id="main-panel">
 
               <div class="panel-header">
@@ -584,28 +604,6 @@ body{
               ></div>
 
             </div>
-
-            <div class="panel side-panel">
-
-              <div class="panel-header">
-                System
-              </div>
-
-              <div class="side-panel-body">
-
-                <div id="st-ls">
-                  Storage: 0
-                </div>
-
-                <div id="st-history">
-                  History: 0
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
 
         </div>
 
