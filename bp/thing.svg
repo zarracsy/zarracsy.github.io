@@ -1,840 +1,385 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-
-  <foreignObject width="100%" height="100%">
-
-    <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-
-      <head>
-
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <title>HOMEBASE</title>
-
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap"
-        />
-
-        <!-- XHTML PATCH -->
-        <script><![CDATA[
-
+<foreignObject width="100%" height="100%">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HOMEBASE</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap"/>
+<script><![CDATA[
 (function(){
-
-  const XHTML_NS =
-    "http://www.w3.org/1999/xhtml";
-
-  const root =
-    document.querySelector("foreignObject")
-      .firstElementChild;
-
-  const head = root.querySelector("head");
-  const body = root.querySelector("body");
-
-  const originalCreateElement =
-    document.createElement.bind(document);
-
-  const originalCreateElementNS =
-    document.createElementNS.bind(document);
-
-  Object.defineProperty(document, "head", {
-    get(){ return head; },
-    configurable:true
-  });
-
-  Object.defineProperty(document, "body", {
-    get(){ return body; },
-    configurable:true
-  });
-
-  Object.defineProperty(document, "documentElement", {
-    get(){ return root; },
-    configurable:true
-  });
-
-  document.createElement =
-    function(tagName, options){
-
-      if(typeof tagName === "string"){
-
-        return originalCreateElementNS(
-          XHTML_NS,
-          tagName,
-          options
-        );
-      }
-
-      return originalCreateElement(
-        tagName,
-        options
-      );
-    };
-
-  document.createElementNS =
-    function(namespaceURI, qualifiedName, options){
-
-      if(
-        namespaceURI == null ||
-        namespaceURI === XHTML_NS
-      ){
-
-        return originalCreateElementNS(
-          XHTML_NS,
-          qualifiedName,
-          options
-        );
-      }
-
-      return originalCreateElementNS(
-        namespaceURI,
-        qualifiedName,
-        options
-      );
-    };
-
+  const NS="http://www.w3.org/1999/xhtml";
+  const root=document.querySelector("foreignObject").firstElementChild;
+  const head=root.querySelector("head");
+  const body=root.querySelector("body");
+  const origCE=document.createElement.bind(document);
+  const origCENS=document.createElementNS.bind(document);
+  Object.defineProperty(document,"head",{get(){return head;},configurable:true});
+  Object.defineProperty(document,"body",{get(){return body;},configurable:true});
+  Object.defineProperty(document,"documentElement",{get(){return root;},configurable:true});
+  document.createElement=function(t,o){return typeof t==="string"?origCENS(NS,t,o):origCE(t,o);};
+  document.createElementNS=function(ns,q,o){return(ns==null||ns===NS)?origCENS(NS,q,o):origCENS(ns,q,o);};
 })();
-
-        ]]></script>
-
-        <style><![CDATA[
-
-:root {
-  --bg: #101112;
-  --accent: #2944d9;
-  --accent-dim: rgba(41,68,217,0.18);
-  --accent-glow: rgba(41,68,217,0.45);
-  --text: #c8cdd6;
-  --text-dim: #5a6070;
-  --text-bright: #e8ecf4;
-  --border: rgba(41,68,217,0.35);
-  --panel-bg: rgba(14,15,17,0.88);
-  --mono: 'Share Tech Mono', monospace;
-  --sans: 'Rajdhani', sans-serif;
+]]></script>
+<style><![CDATA[
+:root{
+  --bg:#101112;
+  --accent:#2944d9;
+  --accent-dim:rgba(41,68,217,0.18);
+  --accent-glow:rgba(41,68,217,0.45);
+  --text:#c8cdd6;
+  --text-dim:#5a6070;
+  --text-bright:#e8ecf4;
+  --border:rgba(41,68,217,0.35);
+  --panel-bg:rgba(14,15,17,0.88);
+  --mono:'Share Tech Mono',monospace;
+  --sans:'Rajdhani',sans-serif;
 }
-
-*,
-*::before,
-*::after{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html,
-body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#101112;
-  color:var(--text);
-  font-family:var(--mono);
-}
-
-body{
-  background:transparent;
-}
-
-#bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-
-  background:url(
-    '/images/supercool.jpg'
-  ) center/cover no-repeat;
-
-  filter:brightness(.28) saturate(.6);
-}
-
-#topline{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-
-  height:1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      var(--accent),
-      transparent
-    );
-
-  opacity:.5;
-  z-index:10;
-}
-
-#loader{
-  position:fixed;
-  inset:0;
-  z-index:200;
-
-  background:var(--bg);
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:18px;
-
-  transition:
-    opacity .6s ease,
-    visibility .6s ease;
-}
-
-#loader.hide{
-  opacity:0;
-  visibility:hidden;
-}
-
-.loader-title{
-  font-family:var(--sans);
-  font-size:2.8rem;
-  font-weight:700;
-  letter-spacing:.25em;
-  color:var(--accent);
-}
-
-.loader-bar-wrap{
-  width:260px;
-  height:2px;
-  background:rgba(41,68,217,.15);
-  overflow:hidden;
-}
-
-.loader-bar{
-  height:100%;
-  width:0%;
-
-  background:var(--accent);
-
-  animation:
-    loadprogress 1.8s
-    cubic-bezier(.4,0,.2,1)
-    forwards;
-}
-
-@keyframes loadprogress{
-
-  0%{
-    width:0%;
-  }
-
-  100%{
-    width:100%;
-  }
-}
-
-#app{
-  position:fixed;
-  inset:0;
-  z-index:1;
-
-  opacity:0;
-
-  transition:opacity .7s ease;
-}
-
-#app.visible{
-  opacity:1;
-}
-
-.hud{
-  position:fixed;
-  z-index:20;
-  color:var(--text-dim);
-  font-size:.68rem;
-}
-
-#hud-tl{
-  top:20px;
-  left:22px;
-}
-
-#hud-tr{
-  top:20px;
-  right:22px;
-  text-align:right;
-}
-
-#hud-bl{
-  bottom:20px;
-  left:22px;
-}
-
-#hud-br{
-  bottom:20px;
-  right:22px;
-  text-align:right;
-}
-
-.hud-label{
-  display:block;
-  margin-bottom:2px;
-
-  font-size:.5rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  color:rgba(41,68,217,.55);
-}
-
-.hud-val{
-  color:var(--text);
-}
-
-.battery-wrap{
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-
-.battery-icon{
-  width:28px;
-  height:13px;
-
-  border:1.5px solid var(--text-dim);
-
-  position:relative;
-
-  padding:1.5px;
-}
-
-.battery-fill{
-  width:72%;
-  height:100%;
-  background:var(--accent);
-}
-
-#open-menu-btn{
-  font-family:var(--mono);
-
-  background:rgba(41,68,217,.06);
-
-  border:1px solid var(--border);
-
-  color:var(--accent);
-
-  padding:7px 16px;
-
-  cursor:pointer;
-}
-
-#main-title{
-  position:fixed;
-  top:50%;
-  left:50%;
-
-  transform:translate(-50%,-50%);
-
-  z-index:5;
-  text-align:center;
-}
-
-.title-text{
-  font-family:var(--sans);
-
-  font-size:clamp(2.5rem,6vw,5rem);
-
-  font-weight:700;
-
-  letter-spacing:.3em;
-
-  color:var(--text-bright);
-
-  text-shadow:
-    0 0 40px rgba(41,68,217,.5),
-    0 0 80px rgba(41,68,217,.2);
-}
-
-#overlay{
-  position:fixed;
-  inset:0;
-
-  background:rgba(6,7,8,.65);
-
-  opacity:0;
-  visibility:hidden;
-
-  z-index:50;
-}
-
-#overlay.show{
-  opacity:1;
-  visibility:visible;
-}
-
-#panel-group{
-  position:fixed;
-
-  top:50%;
-  left:50%;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.93);
-
-  display:flex;
-  gap:14px;
-
-  z-index:60;
-
-  opacity:0;
-  visibility:hidden;
-
-  transition:
-    opacity .32s ease,
-    transform .32s ease;
-}
-
-#panel-group.show{
-  opacity:1;
-  visibility:visible;
-
-  transform:
-    translate(-50%,-50%)
-    scale(1);
-}
-
-.panel{
-  background:var(--panel-bg);
-
-  border:1px solid var(--border);
-
-  backdrop-filter:blur(12px);
-
-  min-height:320px;
-}
-
-.side-panel{
-  width:200px;
-}
-
-#main-panel{
-  width:340px;
-}
-
-.panel-header{
-  padding:10px 14px 8px;
-
-  border-bottom:
-    1px solid rgba(41,68,217,.2);
-
-  color:var(--accent);
-
-  font-size:.58rem;
-
-  letter-spacing:.22em;
-
-  text-transform:uppercase;
-}
-
-.side-panel-body,
-.main-panel-body{
-  padding:14px;
-
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.menu-btn{
-  width:100%;
-
-  padding:10px 14px;
-
-  background:
-    rgba(41,68,217,.04);
-
-  border:
-    1px solid rgba(41,68,217,.2);
-
-  color:var(--text);
-
-  cursor:pointer;
-}
-
-.menu-btn:hover{
-  background:var(--accent-dim);
-}
-
-        ]]></style>
-
-      </head>
-
-      <body>
-
-        <div id="bg"></div>
-
-        <div id="topline"></div>
-
-        <!-- LOADER -->
-
-        <div id="loader">
-
-          <div class="loader-title">
-            H O M E B A S E
-          </div>
-
-          <div class="loader-bar-wrap">
-            <div class="loader-bar"></div>
-          </div>
-
-        </div>
-
-        <!-- APP -->
-
-        <div id="app">
-
-          <!-- HUD -->
-
-          <div class="hud" id="hud-tl">
-
-            <span class="hud-label">
-              Battery
-            </span>
-
-            <div class="battery-wrap">
-
-              <div class="battery-icon">
-                <div
-                  class="battery-fill"
-                  id="battery-fill"
-                ></div>
-              </div>
-
-              <span
-                class="hud-val"
-                id="battery-text"
-              >
-                --
-              </span>
-
-            </div>
-
-          </div>
-
-          <div class="hud" id="hud-tr">
-
-            <span class="hud-label">
-              Local Time
-            </span>
-
-            <span
-              class="hud-val"
-              id="clock"
-            >
-              --:--:--
-            </span>
-
-          </div>
-
-          <div class="hud" id="hud-bl">
-
-            <button id="open-menu-btn">
-              [ Open Menu ]
-            </button>
-
-          </div>
-
-          <div class="hud" id="hud-br">
-
-            <span class="hud-label">
-              External IP
-            </span>
-
-            <span
-              class="hud-val"
-              id="ip-display"
-            >
-              Fetching...
-            </span>
-
-          </div>
-
-          <!-- TITLE -->
-
-          <div id="main-title">
-
-            <div class="title-text">
-              HOMEBASE
-            </div>
-
-          </div>
-
-          <!-- OVERLAY -->
-
-          <div id="overlay"></div>
-
-          <!-- PANELS -->
-
-          <div id="panel-group">
-
-            <div class="panel side-panel">
-
-              <div class="panel-header">
-                Network
-              </div>
-
-              <div class="side-panel-body">
-
-                <div id="net-status">
-                  Online
-                </div>
-
-                <div id="net-type">
-                  4G
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="panel" id="main-panel">
-
-              <div class="panel-header">
-                Menu
-              </div>
-
-              <div
-                class="main-panel-body"
-                id="menu-buttons"
-              ></div>
-
-            </div>
-
-        </div>
-
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;background:#101112;color:var(--text);font-family:var(--mono);}
+body{background:transparent;}
+#bg{position:fixed;inset:0;z-index:0;background:var(--bg);}
+canvas#geo{position:fixed;inset:0;z-index:1;width:100%;height:100%;}
+#topline{position:fixed;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.5;z-index:10;}
+#loader{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s ease,visibility .6s ease;}
+#loader.hide{opacity:0;visibility:hidden;}
+.loader-title{font-family:var(--sans);font-size:2.8rem;font-weight:700;letter-spacing:.25em;color:var(--accent);}
+.loader-bar-wrap{width:260px;height:2px;background:rgba(41,68,217,.15);overflow:hidden;}
+.loader-bar{height:100%;width:0%;background:var(--accent);animation:loadprogress 1.8s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes loadprogress{0%{width:0%;}100%{width:100%;}}
+#app{position:fixed;inset:0;z-index:2;opacity:0;transition:opacity .7s ease;}
+#app.visible{opacity:1;}
+.hud{position:fixed;z-index:20;color:var(--text-dim);font-size:.68rem;}
+#hud-tl{top:20px;left:22px;}
+#hud-tr{top:20px;right:22px;text-align:right;}
+#hud-bl{bottom:20px;left:22px;}
+#hud-br{bottom:20px;right:22px;text-align:right;}
+.hud-label{display:block;margin-bottom:2px;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(41,68,217,.55);}
+.hud-val{color:var(--text);}
+.battery-wrap{display:flex;align-items:center;gap:6px;}
+.battery-icon{width:28px;height:13px;border:1.5px solid var(--text-dim);position:relative;padding:1.5px;}
+.battery-fill{width:72%;height:100%;background:var(--accent);}
+#open-menu-btn{font-family:var(--mono);background:rgba(41,68,217,.06);border:1px solid var(--border);color:var(--accent);padding:7px 16px;cursor:pointer;}
+#main-title{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;text-align:center;}
+.title-text{font-family:var(--sans);font-size:clamp(2.5rem,6vw,5rem);font-weight:700;letter-spacing:.3em;color:var(--text-bright);text-shadow:0 0 40px rgba(41,68,217,.5),0 0 80px rgba(41,68,217,.2);}
+#overlay{position:fixed;inset:0;background:rgba(6,7,8,.65);opacity:0;visibility:hidden;z-index:50;}
+#overlay.show{opacity:1;visibility:visible;}
+#panel-group{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.93);display:flex;gap:14px;z-index:60;opacity:0;visibility:hidden;transition:opacity .32s ease,transform .32s ease;}
+#panel-group.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+.panel{background:var(--panel-bg);border:1px solid var(--border);backdrop-filter:blur(12px);min-height:320px;}
+.side-panel{width:200px;}
+#main-panel{width:340px;}
+.panel-header{padding:10px 14px 8px;border-bottom:1px solid rgba(41,68,217,.2);color:var(--accent);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;}
+.side-panel-body,.main-panel-body{padding:14px;display:flex;flex-direction:column;gap:8px;}
+.menu-btn{width:100%;padding:10px 14px;background:rgba(41,68,217,.04);border:1px solid rgba(41,68,217,.2);color:var(--text);cursor:pointer;}
+.menu-btn:hover{background:var(--accent-dim);}
+]]></style>
+</head>
+<body>
+<div id="bg"></div>
+<canvas id="geo"></canvas>
+<div id="topline"></div>
+
+<div id="loader">
+  <div class="loader-title">H O M E B A S E</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<div id="app">
+  <div class="hud" id="hud-tl">
+    <span class="hud-label">Battery</span>
+    <div class="battery-wrap">
+      <div class="battery-icon"><div class="battery-fill" id="battery-fill"></div></div>
+      <span class="hud-val" id="battery-text">--</span>
+    </div>
+  </div>
+  <div class="hud" id="hud-tr">
+    <span class="hud-label">Local Time</span>
+    <span class="hud-val" id="clock">--:--:--</span>
+  </div>
+  <div class="hud" id="hud-bl">
+    <button id="open-menu-btn">[ Open Menu ]</button>
+  </div>
+  <div class="hud" id="hud-br">
+    <span class="hud-label">External IP</span>
+    <span class="hud-val" id="ip-display">Fetching...</span>
+  </div>
+  <div id="main-title"><div class="title-text">HOMEBASE</div></div>
+  <div id="overlay"></div>
+  <div id="panel-group">
+    <div class="panel side-panel">
+      <div class="panel-header">Network</div>
+      <div class="side-panel-body">
+        <div id="net-status">Online</div>
+        <div id="net-type">4G</div>
       </div>
+    </div>
+    <div class="panel" id="main-panel">
+      <div class="panel-header">Menu</div>
+      <div class="main-panel-body" id="menu-buttons"></div>
+    </div>
+  </div>
+</div>
 
-        <!-- SCRIPT -->
+<script><![CDATA[
+// ── Geometric particle background ──────────────────────────────
+const canvas = document.getElementById("geo");
+const ctx = canvas.getContext("2d");
+let W, H, mouse = {x: -9999, y: -9999};
+const SHAPES = [];
+const COUNT = 38;
+const REPEL_DIST = 130;
+const REPEL_FORCE = 2.8;
 
-        <script><![CDATA[
+const ACCENT = "rgba(41,68,217,";
+const DIM    = "rgba(80,100,200,";
 
-const menuItems = [
+function resize(){
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-  {
-    label:"Yuki OS",
-    url:"https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg"
-  },
+window.addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+window.addEventListener("touchmove", e => {
+  const t = e.touches[0];
+  mouse.x = t.clientX;
+  mouse.y = t.clientY;
+}, {passive: true});
+window.addEventListener("touchend", () => {
+  mouse.x = -9999; mouse.y = -9999;
+}, {passive: true});
 
-  {
-    label:"Lucide",
-    url:"https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/"
-  },
+const TYPES = ["tri","quad","hex","ring","cross"];
 
-  {
-    label:"Petezah",
-    url:"https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg"
-  },
+function randBetween(a,b){ return a + Math.random()*(b-a); }
 
-  {
-    label:"Nikehub",
-    url:"https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg"
-  },
+function makeShape(){
+  const type = TYPES[Math.floor(Math.random()*TYPES.length)];
+  const size = randBetween(10, 36);
+  return {
+    type,
+    x: randBetween(0, W || 1200),
+    y: randBetween(0, H || 800),
+    vx: randBetween(-0.3, 0.3),
+    vy: randBetween(-0.3, 0.3),
+    size,
+    rot: randBetween(0, Math.PI*2),
+    rotV: randBetween(-0.004, 0.004),
+    alpha: randBetween(0.08, 0.32),
+    alphaDir: Math.random()>0.5?1:-1,
+    fill: Math.random()>0.6
+  };
+}
 
-  {
-    label:"Fern",
-    url:"https://d1w7oj52hl4x53.cloudfront.net/"
+for(let i=0;i<COUNT;i++) SHAPES.push(makeShape());
+
+function drawTri(c, s, rot, alpha, fill){
+  c.save(); c.rotate(rot);
+  c.beginPath();
+  for(let i=0;i<3;i++){
+    const a = (Math.PI*2/3)*i - Math.PI/2;
+    i===0?c.moveTo(Math.cos(a)*s,Math.sin(a)*s):c.lineTo(Math.cos(a)*s,Math.sin(a)*s);
   }
+  c.closePath();
+  if(fill){ c.fillStyle=ACCENT+(alpha*0.4)+")"; c.fill(); }
+  c.strokeStyle=ACCENT+alpha+")"; c.lineWidth=1; c.stroke();
+  c.restore();
+}
 
-];
+function drawQuad(c, s, rot, alpha, fill){
+  c.save(); c.rotate(rot);
+  c.beginPath();
+  c.rect(-s/2,-s/2,s,s);
+  if(fill){ c.fillStyle=ACCENT+(alpha*0.35)+")"; c.fill(); }
+  c.strokeStyle=ACCENT+alpha+")"; c.lineWidth=1; c.stroke();
+  c.restore();
+}
 
-const menuBody =
-  document.getElementById(
-    "menu-buttons"
-  );
+function drawHex(c, s, rot, alpha, fill){
+  c.save(); c.rotate(rot);
+  c.beginPath();
+  for(let i=0;i<6;i++){
+    const a=(Math.PI/3)*i;
+    i===0?c.moveTo(Math.cos(a)*s,Math.sin(a)*s):c.lineTo(Math.cos(a)*s,Math.sin(a)*s);
+  }
+  c.closePath();
+  if(fill){ c.fillStyle=DIM+(alpha*0.3)+")"; c.fill(); }
+  c.strokeStyle=DIM+alpha+")"; c.lineWidth=1; c.stroke();
+  c.restore();
+}
 
-menuItems.forEach(item => {
+function drawRing(c, s, rot, alpha){
+  c.save(); c.rotate(rot);
+  c.beginPath();
+  c.arc(0,0,s,0,Math.PI*2);
+  c.strokeStyle=ACCENT+alpha+")"; c.lineWidth=1; c.stroke();
+  c.beginPath();
+  c.arc(0,0,s*0.55,0,Math.PI*2);
+  c.strokeStyle=ACCENT+(alpha*0.5)+")"; c.lineWidth=0.8; c.stroke();
+  c.restore();
+}
 
-  const btn =
-    document.createElement("button");
+function drawCross(c, s, rot, alpha){
+  c.save(); c.rotate(rot);
+  const arm=s*0.9, w=s*0.22;
+  c.beginPath();
+  c.rect(-w/2,-arm/2,w,arm);
+  c.rect(-arm/2,-w/2,arm,w);
+  c.fillStyle=ACCENT+(alpha*0.5)+")"; c.fill();
+  c.restore();
+}
 
-  btn.className = "menu-btn";
+function drawShape(shape){
+  ctx.save();
+  ctx.translate(shape.x, shape.y);
+  const {type,size,rot,alpha,fill} = shape;
+  if(type==="tri")   drawTri(ctx,size,rot,alpha,fill);
+  else if(type==="quad") drawQuad(ctx,size,rot,alpha,fill);
+  else if(type==="hex")  drawHex(ctx,size,rot,alpha,fill);
+  else if(type==="ring") drawRing(ctx,size,rot,alpha);
+  else if(type==="cross") drawCross(ctx,size,rot,alpha);
+  ctx.restore();
+}
 
-  btn.textContent = item.label;
+function drawGrid(){
+  const step=80;
+  ctx.strokeStyle="rgba(41,68,217,0.04)";
+  ctx.lineWidth=0.5;
+  for(let x=0;x<W;x+=step){
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+  }
+  for(let y=0;y<H;y+=step){
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+  }
+}
 
-  btn.onclick = () => {
+function tick(){
+  ctx.clearRect(0,0,W,H);
+  drawGrid();
 
-    const win =
-      window.open(
-        "about:blank",
-        "_blank"
-      );
-
-    if(!win){
-      return;
+  for(const s of SHAPES){
+    const dx = s.x - mouse.x;
+    const dy = s.y - mouse.y;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if(dist < REPEL_DIST && dist > 0){
+      const force = (1 - dist/REPEL_DIST) * REPEL_FORCE;
+      s.vx += (dx/dist)*force*0.12;
+      s.vy += (dy/dist)*force*0.12;
     }
 
-    const iframe =
-      win.document.createElement(
-        "iframe"
-      );
+    s.vx *= 0.97;
+    s.vy *= 0.97;
 
-    iframe.src = item.url;
+    const speed = Math.sqrt(s.vx*s.vx+s.vy*s.vy);
+    if(speed > 3){ s.vx=(s.vx/speed)*3; s.vy=(s.vy/speed)*3; }
 
-    iframe.style.cssText =
-      "position:fixed;inset:0;width:100vw;height:100vh;border:none;";
+    s.x += s.vx;
+    s.y += s.vy;
+    s.rot += s.rotV;
 
-    win.document.body.style.margin = "0";
+    const pad = s.size + 4;
+    if(s.x < pad){ s.x = pad; s.vx = Math.abs(s.vx)*0.6; }
+    if(s.x > W-pad){ s.x = W-pad; s.vx = -Math.abs(s.vx)*0.6; }
+    if(s.y < pad){ s.y = pad; s.vy = Math.abs(s.vy)*0.6; }
+    if(s.y > H-pad){ s.y = H-pad; s.vy = -Math.abs(s.vy)*0.6; }
 
-    win.document.body.appendChild(
-      iframe
-    );
+    s.alpha += s.alphaDir * 0.001;
+    if(s.alpha > 0.38){ s.alphaDir=-1; }
+    if(s.alpha < 0.06){ s.alphaDir=1; }
+
+    drawShape(s);
+  }
+
+  requestAnimationFrame(tick);
+}
+tick();
+
+// ── Menu items ──────────────────────────────────────────────────
+const menuItems=[
+  {label:"Yuki OS",url:"https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg"},
+  {label:"Lucide",url:"https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/"},
+  {label:"Petezah",url:"https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg"},
+  {label:"Nikehub",url:"https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg"},
+  {label:"Fern",url:"https://d1w7oj52hl4x53.cloudfront.net/"}
+];
+const menuBody=document.getElementById("menu-buttons");
+menuItems.forEach(item=>{
+  const btn=document.createElement("button");
+  btn.className="menu-btn";
+  btn.textContent=item.label;
+  btn.onclick=()=>{
+    const win=window.open("about:blank","_blank");
+    if(!win)return;
+    const iframe=win.document.createElement("iframe");
+    iframe.src=item.url;
+    iframe.style.cssText="position:fixed;inset:0;width:100vw;height:100vh;border:none;";
+    win.document.body.style.margin="0";
+    win.document.body.appendChild(iframe);
   };
-
   menuBody.appendChild(btn);
-
 });
 
+// ── Clock ───────────────────────────────────────────────────────
 function updateClock(){
-
-  const now = new Date();
-
-  const h =
-    String(now.getHours())
-      .padStart(2,"0");
-
-  const m =
-    String(now.getMinutes())
-      .padStart(2,"0");
-
-  const s =
-    String(now.getSeconds())
-      .padStart(2,"0");
-
-  document.getElementById(
-    "clock"
-  ).textContent =
-    h + ":" + m + ":" + s;
+  const now=new Date();
+  const h=String(now.getHours()).padStart(2,"0");
+  const m=String(now.getMinutes()).padStart(2,"0");
+  const s=String(now.getSeconds()).padStart(2,"0");
+  document.getElementById("clock").textContent=h+":"+m+":"+s;
 }
-
 setInterval(updateClock,1000);
-
 updateClock();
 
+// ── Battery ─────────────────────────────────────────────────────
 async function initBattery(){
-
-  if(!navigator.getBattery){
-    return;
-  }
-
-  const bat =
-    await navigator.getBattery();
-
+  if(!navigator.getBattery)return;
+  const bat=await navigator.getBattery();
   function render(){
-
-    const pct =
-      Math.round(bat.level * 100);
-
-    document.getElementById(
-      "battery-text"
-    ).textContent =
-      pct + "%";
-
-    document.getElementById(
-      "battery-fill"
-    ).style.width =
-      pct + "%";
+    const pct=Math.round(bat.level*100);
+    document.getElementById("battery-text").textContent=pct+"%";
+    document.getElementById("battery-fill").style.width=pct+"%";
   }
-
   render();
-
-  bat.addEventListener(
-    "levelchange",
-    render
-  );
+  bat.addEventListener("levelchange",render);
 }
 
+// ── IP ──────────────────────────────────────────────────────────
 async function fetchIP(){
-
   try{
-
-    const r =
-      await fetch(
-        "https://api.ipify.org?format=json"
-      );
-
-    const d = await r.json();
-
-    document.getElementById(
-      "ip-display"
-    ).textContent =
-      d.ip;
-
+    const r=await fetch("https://api.ipify.org?format=json");
+    const d=await r.json();
+    document.getElementById("ip-display").textContent=d.ip;
   }catch{
-
-    document.getElementById(
-      "ip-display"
-    ).textContent =
-      "Unavailable";
+    document.getElementById("ip-display").textContent="Unavailable";
   }
 }
 
-const overlay =
-  document.getElementById(
-    "overlay"
-  );
+// ── Overlay / Menu ──────────────────────────────────────────────
+const overlay=document.getElementById("overlay");
+const panelGroup=document.getElementById("panel-group");
+document.getElementById("open-menu-btn").addEventListener("click",()=>{
+  overlay.classList.add("show");
+  panelGroup.classList.add("show");
+});
+overlay.addEventListener("click",()=>{
+  overlay.classList.remove("show");
+  panelGroup.classList.remove("show");
+});
 
-const panelGroup =
-  document.getElementById(
-    "panel-group"
-  );
-
-document
-  .getElementById(
-    "open-menu-btn"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      overlay.classList.add("show");
-
-      panelGroup.classList.add(
-        "show"
-      );
-    }
-  );
-
-overlay.addEventListener(
-  "click",
-  () => {
-
-    overlay.classList.remove(
-      "show"
-    );
-
-    panelGroup.classList.remove(
-      "show"
-    );
-  }
-);
-
-setTimeout(() => {
-
-  document
-    .getElementById("loader")
-    .classList.add("hide");
-
-  document
-    .getElementById("app")
-    .classList.add("visible");
-
+// ── Boot ────────────────────────────────────────────────────────
+setTimeout(()=>{
+  document.getElementById("loader").classList.add("hide");
+  document.getElementById("app").classList.add("visible");
   initBattery();
-
   fetchIP();
-
 },2000);
-
-        ]]></script>
-
-      </body>
-
-    </html>
-
-  </foreignObject>
-
+]]></script>
+</body>
+</html>
+</foreignObject>
 </svg>
