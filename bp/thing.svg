@@ -2,8 +2,10 @@
   <foreignObject width="100%" height="100%">
 
     <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
       <head>
 
+        <!-- SVG/XHTML DOM PATCH -->
         <script>
         (function () {
           const XHTML_NS = "http://www.w3.org/1999/xhtml";
@@ -43,7 +45,6 @@
                 options
               );
             }
-
             return originalCreateElement(tagName, options);
           };
 
@@ -76,557 +77,194 @@
         })();
         </script>
 
-        <!-- base -->
+        <!-- HOMEBASE STYLES -->
         <style><![CDATA[
-          html,
-          body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-          }
 
-          body {
-            background: transparent;
-          }
-
-          foreignObject {
-            overflow: visible;
-          }
-        ]]></style>
-
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <title>HOMEBASE</title>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Rajdhani:wght@300;400;500;600;700&amp;display=swap"
-  rel="stylesheet"
-/>
-
-        <style><![CDATA[
-          :root {
-            --bg: #101112;
-            --accent: #2944d9;
-            --accent-dim: rgba(41,68,217,0.18);
-            --accent-glow: rgba(41,68,217,0.45);
-            --text: #c8cdd6;
-            --text-dim: #5a6070;
-            --text-bright: #e8ecf4;
-            --border: rgba(41,68,217,0.35);
-            --panel-bg: rgba(14,15,17,0.88);
-            --mono: 'Share Tech Mono', monospace;
-            --sans: 'Rajdhani', sans-serif;
-          }
-
-          *,
-          *::before,
-          *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+          :root{
+            --bg:#101112;
+            --accent:#2944d9;
+            --text:#c8cdd6;
+            --text-dim:#5a6070;
+            --text-bright:#e8ecf4;
+            --border:rgba(41,68,217,.35);
+            --panel-bg:rgba(14,15,17,.88);
           }
 
           html,
-          body {
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--mono);
-            overflow: hidden;
-            user-select: none;
+          body{
+            margin:0;
+            width:100%;
+            height:100%;
+            overflow:hidden;
+            background:#101112;
+            font-family:monospace;
           }
 
-          #bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-
-            background:
-              url('https://images5.alphacoders.com/116/thumb-1920-1166049.jpg')
-              center/cover no-repeat;
-
-            filter: brightness(0.28) saturate(0.6);
+          #app{
+            position:relative;
+            width:100vw;
+            height:100vh;
+            overflow:hidden;
+            background:#101112;
+            color:var(--text);
           }
 
-          #topline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+          #bg{
+            position:absolute;
+            inset:0;
+            background:url(
+              https://images5.alphacoders.com/116/thumb-1920-1166049.jpg
+            ) center/cover no-repeat;
 
-            height: 1px;
-
-            background:
-              linear-gradient(
-                90deg,
-                transparent,
-                var(--accent),
-                transparent
-              );
-
-            z-index: 10;
-            opacity: 0.5;
+            filter:brightness(.28) saturate(.6);
           }
 
-          #loader {
-            position: fixed;
-            inset: 0;
-
-            z-index: 100;
-
-            background: var(--bg);
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            gap: 18px;
-
-            transition:
-              opacity 0.6s ease,
-              visibility 0.6s ease;
+          #main-title{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            z-index:5;
+            text-align:center;
           }
 
-          #loader.hide {
-            opacity: 0;
-            visibility: hidden;
-          }
-
-          .loader-title {
-            font-family: var(--sans);
-            font-size: 2.8rem;
-            font-weight: 700;
-
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-
-            color: var(--accent);
-
-            animation: flicker 1.4s steps(1) infinite;
-          }
-
-          .loader-bar-wrap {
-            width: 260px;
-            height: 2px;
-
-            background: rgba(41,68,217,0.15);
-
-            overflow: hidden;
-          }
-
-          .loader-bar {
-            height: 100%;
-            width: 0%;
-
-            background: var(--accent);
-
-            animation:
-              loadprogress 1.8s
-              cubic-bezier(.4,0,.2,1)
-              forwards;
-          }
-
-          .loader-status {
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            letter-spacing: 0.12em;
-
-            animation: blink 0.9s step-end infinite;
-          }
-
-          @keyframes loadprogress {
-            0%   { width: 0%; }
-            30%  { width: 28%; }
-            55%  { width: 61%; }
-            80%  { width: 79%; }
-            100% { width: 100%; }
-          }
-
-          @keyframes blink {
-            50% { opacity: 0; }
-          }
-
-          @keyframes flicker {
-            0%,94%,96%,100% { opacity: 1; }
-            95% { opacity: 0.3; }
-          }
-
-          #app {
-            position: fixed;
-            inset: 0;
-
-            z-index: 1;
-
-            opacity: 0;
-
-            transition: opacity 0.7s ease;
-          }
-
-          #app.visible {
-            opacity: 1;
-          }
-
-          .hud {
-            position: fixed;
-            z-index: 10;
-
-            font-size: 0.68rem;
-            letter-spacing: 0.1em;
-            color: var(--text-dim);
-          }
-
-          .hud-label {
-            font-size: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            color: rgba(41,68,217,0.55);
-
-            display: block;
-            margin-bottom: 2px;
-          }
-
-          .hud-val {
-            color: var(--text);
-          }
-
-          #hud-tl {
-            top: 20px;
-            left: 22px;
-          }
-
-          #hud-tr {
-            top: 20px;
-            right: 22px;
-            text-align: right;
-          }
-
-          #hud-bl {
-            bottom: 20px;
-            left: 22px;
-          }
-
-          #hud-br {
-            bottom: 20px;
-            right: 22px;
-            text-align: right;
-          }
-
-          #main-title {
-            position: fixed;
-
-            top: 50%;
-            left: 50%;
-
-            transform: translate(-50%, -50%);
-
-            text-align: center;
-          }
-
-          .title-text {
-            font-family: var(--sans);
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 700;
-
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-
-            color: var(--text-bright);
-
+          .title{
+            font-size:5rem;
+            letter-spacing:.3em;
+            color:white;
             text-shadow:
-              0 0 40px rgba(41,68,217,0.5),
-              0 0 80px rgba(41,68,217,0.2);
+              0 0 40px rgba(41,68,217,.5),
+              0 0 80px rgba(41,68,217,.2);
           }
 
-          .menu {
-            margin-top: 30px;
-
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-
-            width: 320px;
+          #panel-group{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            display:flex;
+            gap:14px;
+            z-index:20;
           }
 
-          .menu-btn {
-            font-family: var(--mono);
-            font-size: 0.72rem;
+          .panel{
+            width:260px;
+            min-height:300px;
 
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            background:rgba(14,15,17,.88);
 
-            color: var(--text);
+            border:1px solid rgba(41,68,217,.35);
 
-            background: rgba(41,68,217,0.04);
+            backdrop-filter:blur(12px);
 
-            border: 1px solid rgba(41,68,217,0.2);
-
-            padding: 12px 14px;
-
-            cursor: pointer;
-
-            transition: 0.2s;
+            padding:14px;
           }
 
-          .menu-btn:hover {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-
-            color: #fff;
-
-            box-shadow:
-              0 0 10px rgba(41,68,217,0.25);
+          .panel-title{
+            color:#2944d9;
+            text-transform:uppercase;
+            letter-spacing:.2em;
+            margin-bottom:16px;
           }
+
+          .menu-btn{
+            width:100%;
+            padding:10px 14px;
+            margin-bottom:8px;
+
+            background:rgba(41,68,217,.05);
+
+            border:1px solid rgba(41,68,217,.2);
+
+            color:#c8cdd6;
+
+            cursor:pointer;
+          }
+
+          .menu-btn:hover{
+            background:rgba(41,68,217,.18);
+          }
+
         ]]></style>
 
       </head>
 
       <body>
 
-        <div id="bg"></div>
-        <div id="topline"></div>
-
-        <!-- loader -->
-        <div id="loader">
-          <div class="loader-title">HOMEBASE</div>
-
-          <div class="loader-bar-wrap">
-            <div class="loader-bar"></div>
-          </div>
-
-          <div class="loader-status" id="loader-status">
-            Initializing...
-          </div>
-        </div>
-
-        <!-- app -->
         <div id="app">
 
-          <!-- top left -->
-          <div class="hud" id="hud-tl">
-            <span class="hud-label">Battery</span>
-            <span class="hud-val" id="battery-text">--%</span>
-          </div>
+          <div id="bg"></div>
 
-          <!-- top right -->
-          <div class="hud" id="hud-tr">
-            <span class="hud-label">Local Time</span>
-            <span class="hud-val" id="clock">--:--:--</span>
-          </div>
-
-          <!-- bottom right -->
-          <div class="hud" id="hud-br">
-            <span class="hud-label">External IP</span>
-            <span class="hud-val" id="ip-display">Fetching...</span>
-          </div>
-
-          <!-- title -->
           <div id="main-title">
-
-            <div class="title-text">
+            <div class="title">
               HOMEBASE
             </div>
+          </div>
 
-            <div class="menu" id="menu-buttons"></div>
+          <div id="panel-group">
+
+            <div class="panel">
+              <div class="panel-title">
+                Network
+              </div>
+
+              <div>Status: Online</div>
+              <div>RTT: 14ms</div>
+              <div>Downlink: 120Mbps</div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-title">
+                Menu
+              </div>
+
+              <button class="menu-btn">
+                Yuki OS
+              </button>
+
+              <button class="menu-btn">
+                Lucide
+              </button>
+
+              <button class="menu-btn">
+                Petezah
+              </button>
+
+            </div>
+
+            <div class="panel">
+              <div class="panel-title">
+                System
+              </div>
+
+              <div>Battery: 72%</div>
+              <div>Storage: 14 Items</div>
+              <div>Language: en-US</div>
+            </div>
 
           </div>
 
         </div>
 
-        <script><![CDATA[
+        <!-- HOMEBASE SCRIPT -->
+        <script>
 
-          const menuItems = [
-            {
-              label: 'Yuki OS',
-              url:
-                'https://quantil.jsdelivr.net/gh/reeyuki/YukiOsSingleHtml@main/yukios.svg'
-            },
+          console.log("HOMEBASE booted inside SVG");
 
-            {
-              label: 'Lucide',
-              url:
-                'https://cdn.jsdelivr.net/gh/lucideproxy/svg@latest/logo.svg#/'
-            },
+          document
+            .querySelectorAll(".menu-btn")
+            .forEach(btn => {
 
-            {
-              label: 'Petezah',
-              url:
-                'https://originfastly.jsdelivr.net/gh/PeteZah-G/PeteZahStaticDone@959d81f/new.svg'
-            },
+              btn.onclick = () => {
+                console.log(btn.textContent);
+              };
 
-            {
-              label: 'Nikehub',
-              url:
-                'https://cdn.jsdelivr.net/gh/avaisadev/github.com@latest/index.svg'
-            },
+            });
 
-            {
-              label: 'Fern',
-              url:
-                'https://d1w7oj52hl4x53.cloudfront.net/'
-            }
-          ];
-
-          // build buttons
-          const menuBody =
-            document.getElementById('menu-buttons');
-
-          menuItems.forEach(item => {
-
-            const btn =
-              document.createElement('button');
-
-            btn.className = 'menu-btn';
-
-            btn.textContent = item.label;
-
-            btn.onclick = () => {
-
-              const win =
-                window.open('about:blank', '_blank');
-
-              if (!win) return;
-
-              const iframe =
-                win.document.createElement('iframe');
-
-              iframe.src = item.url;
-
-              iframe.style.cssText = `
-                position:fixed;
-                inset:0;
-                width:100vw;
-                height:100vh;
-                border:none;
-              `;
-
-              win.document.body.style.margin = '0';
-
-              win.document.body.appendChild(iframe);
-            };
-
-            menuBody.appendChild(btn);
-          });
-
-          // loader
-          const statuses = [
-            'Initializing...',
-            'Loading modules...',
-            'Verifying integrity...',
-            'Mounting resources...',
-            'Ready.'
-          ];
-
-          let si = 0;
-
-          const statusEl =
-            document.getElementById('loader-status');
-
-          const statusInterval = setInterval(() => {
-
-            si++;
-
-            if (si < statuses.length) {
-              statusEl.textContent = statuses[si];
-            } else {
-              clearInterval(statusInterval);
-            }
-
-          }, 360);
-
-          setTimeout(() => {
-
-            document
-              .getElementById('loader')
-              .classList.add('hide');
-
-            document
-              .getElementById('app')
-              .classList.add('visible');
-
-          }, 2000);
-
-          // clock
-          function updateClock() {
-
-            const now = new Date();
-
-            const h =
-              String(now.getHours()).padStart(2, '0');
-
-            const m =
-              String(now.getMinutes()).padStart(2, '0');
-
-            const s =
-              String(now.getSeconds()).padStart(2, '0');
-
-            document.getElementById('clock')
-              .textContent = `${h}:${m}:${s}`;
-          }
-
-          setInterval(updateClock, 1000);
-
-          updateClock();
-
-          // battery
-          async function initBattery() {
-
-            if (!navigator.getBattery) return;
-
-            const bat =
-              await navigator.getBattery();
-
-            function render() {
-
-              const pct =
-                Math.round(bat.level * 100);
-
-              document
-                .getElementById('battery-text')
-                .textContent = pct + '%';
-            }
-
-            render();
-
-            bat.addEventListener(
-              'levelchange',
-              render
-            );
-          }
-
-          initBattery();
-
-          // ip
-          async function fetchIP() {
-
-            try {
-
-              const r = await fetch(
-                'https://api.ipify.org?format=json'
-              );
-
-              const d = await r.json();
-
-              document
-                .getElementById('ip-display')
-                .textContent = d.ip;
-
-            } catch {
-
-              document
-                .getElementById('ip-display')
-                .textContent = 'Unavailable';
-            }
-          }
-
-          fetchIP();
-
-        ]]></script>
+        </script>
 
       </body>
+
     </html>
 
   </foreignObject>
