@@ -140,7 +140,7 @@ body{
   z-index:0;
 
   background:url(
-    'https://zarracsy.github.io/image.png'
+    '/images/wallpaper.png'
   ) center/cover no-repeat;
 
   filter:brightness(.28) saturate(.6);
